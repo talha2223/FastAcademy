@@ -7,7 +7,7 @@
    - Postgres (required)
    - Blob (required for image uploads)
 4. Add Environment Variables in Vercel:
-   - `DATABASE_URL` (from Vercel Postgres)
+   - `DATABASE_URL` (optional if Vercel Postgres auto vars exist)
    - `NEXTAUTH_SECRET` (long random string)
    - `NEXTAUTH_URL` (`https://your-project.vercel.app`)
    - `SETUP_CODE` (your private setup code)
@@ -23,5 +23,10 @@
 
 ## Notes
 - Project is now configured for `PostgreSQL` in Prisma (`prisma/schema.prisma`).
+- Vercel build script auto-picks DB URL from:
+  - `DATABASE_URL`
+  - `POSTGRES_URL_NON_POOLING`
+  - `POSTGRES_PRISMA_URL`
+  - `POSTGRES_URL`
 - Direct image upload is enabled for teacher photos, post covers, and profile photos.
 - Without Blob token, uploads only work locally in `public/uploads/*`.
