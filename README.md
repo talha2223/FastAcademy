@@ -1,19 +1,32 @@
-# The Fast Academy of Sciences
+﻿# The Fast Academy of Sciences
 
-## Quick Vercel Deploy
+## Firebase Deploy (Simple)
 1. Push this project to GitHub.
-2. In Vercel, click `New Project` and import this repo.
-3. In Vercel `Storage`, connect:
-   - Postgres (required)
-   - Blob (required for image uploads)
-4. In Vercel `Settings -> Environment Variables`, add:
-   - `NEXTAUTH_SECRET` (long random string)
-   - `NEXTAUTH_URL` (`https://your-project.vercel.app`)
-   - `SETUP_CODE` (your private setup code)
-   - `BLOB_READ_WRITE_TOKEN` (from Vercel Blob)
-   - `DATABASE_URL` (optional if Postgres auto variables are connected)
-5. Deploy (build command is already configured in `vercel.json`).
-6. Open `https://your-project.vercel.app/setup` once and create the first admin.
+2. In Firebase Console, create/select your project.
+3. Open **App Hosting** and connect this GitHub repo.
+4. In App Hosting backend environment variables, add:
+   - `DATABASE_URL`
+   - `NEXTAUTH_SECRET`
+   - `NEXTAUTH_URL` (your Firebase App Hosting URL)
+   - `SETUP_CODE`
+   - `CLOUDINARY_CLOUD_NAME`
+   - `CLOUDINARY_API_KEY`
+   - `CLOUDINARY_API_SECRET`
+   - `NEXT_PUBLIC_FIREBASE_API_KEY`
+   - `NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN`
+   - `NEXT_PUBLIC_FIREBASE_PROJECT_ID`
+   - `NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET`
+   - `NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID`
+   - `NEXT_PUBLIC_FIREBASE_APP_ID`
+   - `NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID`
+5. Deploy from App Hosting.
+6. Open `https://your-app-url/setup` once and create the first admin.
+
+## Firebase CLI Commands
+- Login: `npm run firebase:login`
+- List projects: `npm run firebase:projects`
+- Create App Hosting backend: `npm run firebase:apphosting:create`
+- Create rollout: `npm run firebase:apphosting:rollout -- <backend-id> --git-branch main`
 
 ## Local Commands
 - Install: `npm install`
@@ -23,10 +36,7 @@
 
 ## Notes
 - Prisma is configured for PostgreSQL in `prisma/schema.prisma`.
-- Vercel build script auto-picks DB URL from:
-  - `DATABASE_URL`
-  - `POSTGRES_URL_NON_POOLING`
-  - `POSTGRES_PRISMA_URL`
-  - `POSTGRES_URL`
-- Direct image upload is enabled for teacher photos, post cover images, and profile photos.
-- Without Blob token, uploads only work locally in `public/uploads/*`.
+- `.firebaserc` is configured with project id `fastacademyburewala`.
+- `apphosting.yaml` is included for Firebase App Hosting runtime config.
+- Image uploads use Cloudinary.
+- In production (Cloud Run), local file fallback is disabled; Cloudinary env vars are required.

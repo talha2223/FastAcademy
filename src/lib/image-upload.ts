@@ -1,4 +1,4 @@
-import { put } from '@vercel/blob';
+import { v2 as cloudinary } from 'cloudinary';
 import { mkdir, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { randomUUID } from 'node:crypto';
@@ -19,6 +19,19 @@ const EXTENSION_BY_TYPE: Record<string, string> = {
   'image/gif': '.gif',
   'image/avif': '.avif'
 };
+
+const cloudinaryCloudName = process.env.CLOUDINARY_CLOUD_NAME;
+const cloudinaryApiKey = process.env.CLOUDINARY_API_KEY;
+const cloudinaryApiSecret = process.env.CLOUDINARY_API_SECRET;
+
+if (cloudinaryCloudName && cloudinaryApiKey && cloudinaryApiSecret) {
+  cloudinary.config({
+    cloud_name: cloudinaryCloudName,
+    api_key: cloudinaryApiKey,
+    api_secret: cloudinaryApiSecret,
+    secure: true
+  });
+}
 
 function sanitizeName(name: string) {
   const base = name
@@ -64,21 +77,24 @@ export async function storeUploadedImage(file: File, folder: string) {
 
   const safeFolder = sanitizeFolder(folder);
   const filename = `${Date.now()}-${randomUUID()}-${sanitizeName(file.name)}${extensionForFile(file)}`;
-  const blobToken = process.env.BLOB_READ_WRITE_TOKEN;
 
-  if (blobToken) {
+  if (cloudinaryCloudName && cloudinaryApiKey && cloudinaryApiSecret) {
     try {
-      const blob = await put(`academy/${safeFolder}/${filename}`, file, {
-        access: 'public',
-        token: blobToken
+      const bytes = Buffer.from(await file.arrayBuffer());
+      const base64 = bytes.toString('base64');
+      const upload = await cloudinary.uploader.upload(`data:${file.type};base64,${base64}`, {
+        folder: `academy/${safeFolder}`,
+        public_id: filename.replace(/\.[^.]+$/, ''),
+        resource_type: 'image'
       });
-      return blob.url;
+      return upload.secure_url;
     } catch {
       return null;
     }
   }
 
-  if (process.env.VERCEL) {
+  // Firebase App Hosting runs on Cloud Run and its filesystem is not persistent.
+  if (process.env.K_SERVICE) {
     return null;
   }
 
