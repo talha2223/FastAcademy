@@ -1,0 +1,9 @@
+﻿/node_modules
+/node_modules_bad_20260305
+/.next
+/out
+*.log
+/.env
+/.env.local
+/.env.*.local
+/prisma/dev.db

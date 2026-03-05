@@ -1,0 +1,97 @@
+// Prisma schema for Academy Website
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           String   @id @default(cuid())
+  name         String?
+  email        String   @unique
+  passwordHash String
+  role         String   @default("USER")
+  phone        String?
+  bio          String?
+  photoUrl     String?
+  lastLoginAt  DateTime?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+model SiteSettings {
+  id                 String   @id @default(cuid())
+  academyName        String
+  headerLabel        String   @default("THE FAST")
+  tagline            String
+  aboutText          String
+  address            String
+  whatsapp           String
+  contactEmail       String
+  heroBadge          String   @default("Admissions Open")
+  heroCtaText        String
+  heroCtaLink        String
+  statOneValue       String   @default("25+")
+  statOneLabel       String   @default("Years Legacy")
+  statTwoValue       String   @default("12+")
+  statTwoLabel       String   @default("Expert Teachers")
+  statThreeValue     String   @default("1,000+")
+  statThreeLabel     String   @default("Students Trained")
+  aboutBadgeOne      String   @default("Result Focused")
+  aboutBadgeTwo      String   @default("Modern Labs")
+  aboutBadgeThree    String   @default("Mentoring")
+  admissionsTitle    String   @default("Admissions Desk")
+  admissionsText     String   @default("Reach us on WhatsApp for admission guidance and updated fee details.")
+  officeHours        String   @default("Monday - Saturday: 9:00 AM - 5:00 PM")
+  contactHelpTitle   String   @default("Need help?")
+  contactHelpText    String   @default("Message us on WhatsApp for admissions and fee details.")
+  feeNote            String
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+}
+
+model Teacher {
+  id             String   @id @default(cuid())
+  name           String
+  subject        String
+  bio            String?
+  photoUrl       String?
+  photoZoom      Float    @default(1)
+  photoPositionX Int      @default(50)
+  photoPositionY Int      @default(50)
+  order          Int      @default(0)
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+}
+
+model FeeItem {
+  id        String   @id @default(cuid())
+  title     String
+  amount    String
+  period    String
+  note      String?
+  order     Int      @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Post {
+  id            String   @id @default(cuid())
+  type          String
+  title         String
+  slug          String   @unique
+  excerpt       String
+  contentMd     String
+  coverImageUrl String?
+  published     Boolean  @default(true)
+  pinned        Boolean  @default(false)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  @@index([type, published])
+  @@index([createdAt])
+}

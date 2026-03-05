@@ -1,0 +1,96 @@
+﻿@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --white: #f9fbff;
+  --blue: #1e4fd6;
+  --red: #e11d2a;
+  --yellow: #f5c012;
+  --navy: #0b1c3a;
+  --ink: #0f172a;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  color: var(--ink);
+  font-family: var(--font-manrope), system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background: radial-gradient(circle at 10% 10%, rgba(245, 192, 18, 0.15), transparent 40%),
+    radial-gradient(circle at 80% 20%, rgba(30, 79, 214, 0.2), transparent 45%),
+    linear-gradient(160deg, #ffffff 0%, #f1f5ff 45%, #fff8e6 100%);
+  min-height: 100vh;
+}
+
+h1, h2, h3, h4, h5 {
+  font-family: var(--font-space), system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+main {
+  position: relative;
+  z-index: 1;
+}
+
+.section {
+  @apply py-16 md:py-24;
+}
+
+.section-title {
+  @apply text-3xl md:text-4xl font-semibold tracking-tight text-[color:var(--navy)];
+}
+
+.card {
+  @apply rounded-2xl bg-white/90 shadow-lg shadow-blue-200/40 border border-white;
+}
+
+.button-primary {
+  @apply inline-flex items-center gap-2 rounded-full bg-[color:var(--blue)] px-6 py-3 text-white font-semibold shadow-glow transition hover:scale-[1.01];
+}
+
+.button-outline {
+  @apply inline-flex items-center gap-2 rounded-full border-2 border-[color:var(--blue)] px-6 py-3 text-[color:var(--blue)] font-semibold hover:bg-[color:var(--blue)] hover:text-white transition;
+}
+
+.stagger > * {
+  opacity: 0;
+  transform: translateY(12px);
+  animation: fadeUp 0.6s ease forwards;
+}
+
+.stagger > *:nth-child(1) { animation-delay: 0.05s; }
+.stagger > *:nth-child(2) { animation-delay: 0.12s; }
+.stagger > *:nth-child(3) { animation-delay: 0.18s; }
+.stagger > *:nth-child(4) { animation-delay: 0.24s; }
+.stagger > *:nth-child(5) { animation-delay: 0.3s; }
+
+@keyframes fadeUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.gradient-band {
+  background: linear-gradient(90deg, var(--blue), var(--red), var(--yellow));
+}
+
+.badge {
+  @apply inline-flex items-center rounded-full px-3 py-1 text-xs font-semibold uppercase tracking-wide;
+  background: rgba(30, 79, 214, 0.08);
+  color: var(--blue);
+}
+
+.markdown h2 {
+  @apply text-2xl font-semibold text-[color:var(--navy)] mt-6;
+}
+
+.markdown p {
+  @apply leading-relaxed text-slate-700 mt-3;
+}
+
+.markdown ul {
+  @apply list-disc pl-5 mt-3 text-slate-700;
+}
