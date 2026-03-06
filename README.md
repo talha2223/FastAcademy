@@ -1,42 +1,33 @@
 ﻿# The Fast Academy of Sciences
 
-## Firebase Deploy (Simple)
+## Netlify Deploy (Simple)
 1. Push this project to GitHub.
-2. In Firebase Console, create/select your project.
-3. Open **App Hosting** and connect this GitHub repo.
-4. In App Hosting backend environment variables, add:
+2. In Netlify, click `Add new site` -> `Import an existing project`.
+3. Connect this GitHub repo and select branch `main`.
+4. Build settings:
+   - Build command: `npm run build`
+   - Publish directory: leave empty (Netlify Next.js plugin handles this)
+5. In Netlify `Site settings -> Environment variables`, add:
    - `DATABASE_URL`
    - `NEXTAUTH_SECRET`
-   - `NEXTAUTH_URL` (your Firebase App Hosting URL)
+   - `NEXTAUTH_URL` (your Netlify site URL, e.g. `https://your-site.netlify.app`)
    - `SETUP_CODE`
    - `CLOUDINARY_CLOUD_NAME`
    - `CLOUDINARY_API_KEY`
    - `CLOUDINARY_API_SECRET`
-   - `NEXT_PUBLIC_FIREBASE_API_KEY`
-   - `NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN`
-   - `NEXT_PUBLIC_FIREBASE_PROJECT_ID`
-   - `NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET`
-   - `NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID`
-   - `NEXT_PUBLIC_FIREBASE_APP_ID`
-   - `NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID`
-5. Deploy from App Hosting.
-6. Open `https://your-app-url/setup` once and create the first admin.
-
-## Firebase CLI Commands
-- Login: `npm run firebase:login`
-- List projects: `npm run firebase:projects`
-- Create App Hosting backend: `npm run firebase:apphosting:create`
-- Create rollout: `npm run firebase:apphosting:rollout -- <backend-id> --git-branch main`
+6. Deploy the site.
+7. Open `https://your-site.netlify.app/setup` once and create the first admin.
 
 ## Local Commands
 - Install: `npm install`
 - Dev: `npm run dev`
+- Build: `npm run build`
 - Generate Prisma client: `npm run prisma:generate`
 - Push schema: `npm run db:push`
 
 ## Notes
 - Prisma is configured for PostgreSQL in `prisma/schema.prisma`.
-- `.firebaserc` is configured with project id `fastacademyburewala`.
-- `apphosting.yaml` is included for Firebase App Hosting runtime config.
+- Netlify support is configured in `netlify.toml` using `@netlify/plugin-nextjs`.
 - Image uploads use Cloudinary.
-- In production (Cloud Run), local file fallback is disabled; Cloudinary env vars are required.
+- In production server environments, local file upload fallback is disabled; Cloudinary env vars are required.
+- Firebase web analytics env vars in `.env.example` are optional.
