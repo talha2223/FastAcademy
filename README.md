@@ -6,7 +6,7 @@
 3. Connect this GitHub repo and select branch `main`.
 4. Build settings:
    - Build command: `npm run build`
-   - Publish directory: leave empty (Netlify Next.js plugin handles this)
+   - Publish directory: `.next`
 5. In Netlify `Site settings -> Environment variables`, add:
    - `DATABASE_URL`
    - `NEXTAUTH_SECRET`
