@@ -1,22 +1,20 @@
-﻿# The Fast Academy of Sciences
+# The Fast Academy of Sciences
 
-## Netlify Deploy (Simple)
+## Vercel Deploy (Simple)
 1. Push this project to GitHub.
-2. In Netlify, click `Add new site` -> `Import an existing project`.
-3. Connect this GitHub repo and select branch `main`.
-4. Build settings:
-   - Build command: `npm run build`
-   - Publish directory: `.next`
-5. In Netlify `Site settings -> Environment variables`, add:
+2. In Vercel, click `Add New...` -> `Project`.
+3. Import this GitHub repo and select branch `main`.
+4. Framework preset: `Next.js`.
+5. In `Project Settings -> Environment Variables`, add:
    - `DATABASE_URL`
-   - `NEXTAUTH_SECRET`
-   - `NEXTAUTH_URL` (your Netlify site URL, e.g. `https://your-site.netlify.app`)
+   - `NEXTAUTH_SECRET` (long random string)
+   - `NEXTAUTH_URL` (for example `https://your-project.vercel.app`)
    - `SETUP_CODE`
    - `CLOUDINARY_CLOUD_NAME`
    - `CLOUDINARY_API_KEY`
    - `CLOUDINARY_API_SECRET`
-6. Deploy the site.
-7. Open `https://your-site.netlify.app/setup` once and create the first admin.
+6. Deploy.
+7. Open `https://your-project.vercel.app/setup` once and create the first admin.
 
 ## Local Commands
 - Install: `npm install`
@@ -27,7 +25,7 @@
 
 ## Notes
 - Prisma is configured for PostgreSQL in `prisma/schema.prisma`.
-- Netlify support is configured in `netlify.toml` using `@netlify/plugin-nextjs`.
+- Vercel config is in `vercel.json`.
 - Image uploads use Cloudinary.
 - In production server environments, local file upload fallback is disabled; Cloudinary env vars are required.
 - Firebase web analytics env vars in `.env.example` are optional.
